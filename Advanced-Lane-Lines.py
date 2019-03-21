@@ -241,17 +241,21 @@ def pipeline(original_img):
     vertices = np.array([[(200, imshape[0]), (imshape[1]/2-40, imshape[0]*.6), 
         (imshape[1]/2+40, imshape[0]*.6), (1200, imshape[0])]], dtype=np.float32)
     warped_img, M, Minv = bird_eye(undistorted_img, vertices, 200)
+    cv2.imwrite("./output_images/process/01_warped_img.jpg", warped_img)
     sobelx_img = abs_sobel_thresh(warped_img, 'x', 10, 100)
     s_binary = space_thresh(warped_img, 'S', 80, 255)
     combined_img = combine(sobelx_img, s_binary)
+    cv2.imwrite("./output_images/process/02_combined_img.jpg", combined_img)
     out_img, left_fit, right_fit, left_fit_m, right_fit_m = find_lane_pixels(combined_img)
+    cv2.imwrite("./output_images/process/03_out_img.jpg", out_img)
     if left_fit is None or right_fit is None:
         return original_img
     else:
         out_img_with_lane = draw_lane(original_img, left_fit, right_fit, Minv)
+        cv2.imwrite("./output_images/process/04_out_img_with_lane.jpg", out_img_with_lane)
         result = draw_information(out_img_with_lane, left_fit_m, right_fit_m)
+        cv2.imwrite("./output_images/process/05_result.jpg", result)
     return result
-    return combined_img
 
 def run_image():
     test_filenames = glob.glob('./test_images/*.jpg')
@@ -266,9 +270,9 @@ def run_image():
 def run_video(input_name):
     video = VideoFileClip(input_name)
     clip = video.fl_image(pipeline) 
-    clip.write_videofile("output_videos/"+input_name, audio=False)
+    #clip.write_videofile("output_videos/"+input_name, audio=False)
 
-#img = cv2.imread('./test_images/test3.jpg')
+#img = cv2.imread('./test_images/challenge.jpg')
 #img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 #output = pipeline(img)
 #plt.imshow(output)

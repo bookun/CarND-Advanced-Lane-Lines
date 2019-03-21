@@ -26,6 +26,12 @@ The goals / steps of this project are the following:
 [image7]: ./output_images/output_all_image.jpg "All Output"
 [video1]: ./output_videos/project_video.mp4 "Video"
 [video2]: ./output_videos/challenge.mp4 "Challenge"
+[challenge0]: ./test_images/challenge.jpg "challenge"
+[challenge1]: ./output_images/process/01_warped_img.jpg "warped"
+[challenge2]: ./output_images/process/02_combined_img.jpg "combined"
+[challenge3]: ./output_images/process/03_out_img.jpg "out"
+[challenge4]: ./output_images/process/04_out_img_with_lane.jpg "out_with_line"
+[challenge5]: ./output_images/process/05_result.jpg "result"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
@@ -148,3 +154,22 @@ Here's a [challenge_video.mp4 made by using my pipeline](./output_videos/challen
 #### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+
+I don't know the optimal combination method of thresholding.
+I can't find lane of challenge_video.mp4.
+So, I tried finding reason of fail.
+
+I picked below image in challege.mp4.
+
+![alt text][challenge0]
+
+Warped image is below.
+
+![alt text][challenge1]
+
+Threshold image is bellow.
+
+![alt text][challenge2]
+
+My combination is not appropriate.
+The remaining steps are failed because I failed in this step.
