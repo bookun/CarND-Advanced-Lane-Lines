@@ -30,8 +30,8 @@ The goals / steps of this project are the following:
 [challenge1]: ./output_images/process/01_warped_img.jpg "warped"
 [challenge2]: ./output_images/process/02_combined_img.jpg "combined"
 [challenge3]: ./output_images/process/03_out_img.jpg "out"
-[challenge4]: ./output_images/process/04_out_img_with_lane.jpg "out_with_line"
-[challenge5]: ./output_images/process/05_result.jpg "result"
+[challenge5]: ./output_images/process/04_out_img_with_info.jpg "result"
+[challenge4]: ./output_images/process/05_out_img_with_lane.jpg "out_with_line"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
