@@ -26,7 +26,7 @@ The goals / steps of this project are the following:
 [image7]: ./output_images/output_all_image.jpg "All Output"
 [video1]: ./output_videos/project_video.mp4 "Video"
 [video2]: ./output_videos/challenge.mp4 "Challenge"
-[challenge0]: ./test_images/challenge.jpg "challenge"
+[challenge0]: ./test_images/challenges/challenge.jpg "challenge"
 [challenge1]: ./output_images/process/01_warped_img.jpg "warped"
 [challenge2]: ./output_images/process/02_combined_img.jpg "combined"
 [challenge3]: ./output_images/process/03_out_img.jpg "out"

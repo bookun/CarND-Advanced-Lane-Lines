@@ -94,7 +94,7 @@ def bird_eye(img, src, offset):
         (X-offset, 0),
         (X-offset, Y)
         ])
-    ym_per_pix = 50 / Y
+    ym_per_pix = 20 / Y
     xm_per_pix = 3.7 / (X-2*offset)
     M = cv2.getPerspectiveTransform(src, dst)
     Minv = cv2.getPerspectiveTransform(dst, src)
@@ -187,7 +187,7 @@ def calc_curve(left_fit_cr, right_fit_cr, y_eval=720):
     left_curverad = ((1 + (2*left_fit_cr[0]*y_eval*ym_per_pix + left_fit_cr[1])**2)**1.5) / np.absolute(2*left_fit_cr[0])
     right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**2)**1.5) / np.absolute(2*right_fit_cr[0])
 
-    return left_curverad / 1000, right_curverad / 1000
+    return left_curverad, right_curverad
 
 def draw_lane(img, left_fit, right_fit, Minv):
     global fail_flag, before_left_fitx, before_right_fitx
@@ -234,8 +234,8 @@ def draw_information(img, left_fit_m, right_fit_m):
 
     font = cv2.FONT_HERSHEY_SIMPLEX
     fontColor = (255, 255, 255)
-    cv2.putText(img, 'Left curvature: {:.2f} km'.format(left), (50, 50), font, 2, fontColor, 2)
-    cv2.putText(img, 'Right curvature: {:.2f} km'.format(right), (50, 120), font, 2, fontColor, 2)
+    cv2.putText(img, 'Left curvature: {} m'.format(int(left)), (50, 50), font, 2, fontColor, 2)
+    cv2.putText(img, 'Right curvature: {} m'.format(int(right)), (50, 120), font, 2, fontColor, 2)
     cv2.putText(img, 'Vehicle is {} '.format(message), (50, 190), font, 2, fontColor, 2)
     cv2.putText(img, 'Lane width is {} '.format(tmp_lane_width), (50, 250), font, 2, fontColor, 2)
     
@@ -245,15 +245,15 @@ def pipeline(original_img, debugFlag=0):
     img = original_img.copy()
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     imshape = img.shape
+    undistort_img = undistort(img)
+    if debugFlag:
+        cv2.imwrite("./output_images/process/00_undistort_img.jpg", undistort_img)
     vertices = np.array([[(200, imshape[0]), (imshape[1]/2-80, imshape[0]*.65), 
         (imshape[1]/2+80, imshape[0]*.65), (1200, imshape[0])]], dtype=np.float32)
-    warped_img, M, Minv = bird_eye(img, vertices, 200)
+    warped_img, M, Minv = bird_eye(undistort_img, vertices, 200)
     if debugFlag:
         cv2.imwrite("./output_images/process/01_warped_img.jpg", warped_img)
 
-    warped_img = undistort(warped_img)
-    if debugFlag:
-        cv2.imwrite("./output_images/process/01_undistort_warped_img.jpg", warped_img)
 
     #lab_img = lab_thresh(warped_img, 0, 125)
     #if debugFlag:
@@ -314,7 +314,7 @@ img = cv2.imread('./test_images/challenges/challenge2.jpg')
 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 debugFlag = 1
 output = pipeline(img, debugFlag)
-plt.imshow(output, cmap='gray')
+#plt.imshow(output, cmap='gray')
 #plt.savefig("./output_images/output_image.jpg")
 #run_image()
 #plt.savefig("./output_images/output_all_image.jpg")
